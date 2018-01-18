@@ -2,30 +2,19 @@ package com.codingbuffalo.aerialdream.data;
 
 import android.net.Uri;
 
-public class Video {
-    private String url;
+public abstract class Video {
+    public enum Type {
+        APPLE_2015,
+        APPLE_2017
+    }
+    
     private String accessibilityLabel;
-    private String timeOfDay;
-
-    public Video(String url, String location, String timeOfDay) {
-        this.url = url;
-        this.accessibilityLabel = location;
-        this.timeOfDay = timeOfDay;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public Uri getUri() {
-        return Uri.parse(url);
-    }
 
     public String getLocation() {
         return accessibilityLabel;
     }
+    
+    public abstract Uri getUri();
 
-    public String getTimeOfDay() {
-        return timeOfDay;
-    }
+    public abstract Type getType();
 }

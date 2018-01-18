@@ -1,6 +1,5 @@
 package com.codingbuffalo.aerialdream.data;
 
-
 import android.support.annotation.NonNull;
 
 import com.codingbuffalo.aerialdream.data.protium.Interactor;
@@ -11,27 +10,29 @@ import java.util.concurrent.Executors;
 
 public class VideoInteractor extends Interactor {
     private Listener listener;
-    private VideoRepository repository;
+    private Apple2015Repository apple2015Repository;
+    private Apple2017Repository apple2017Repository;
 
     public VideoInteractor(@NonNull Listener listener) {
         super(Executors.newCachedThreadPool());
         
         this.listener = listener;
-        repository = new VideoRepository();
+        apple2015Repository = new Apple2015Repository();
+        apple2017Repository = new Apple2017Repository();
     }
 
     public void fetchVideos() {
         execute(new FetchVideosTask());
     }
 
-    private class FetchVideosTask extends ValueTask<List<Video>> {
+    private class FetchVideosTask extends ValueTask<List<? extends Video>> {
         @Override
-        public List<Video> onExecute() throws Exception {
-            return repository.fetchVideos();
+        public List<? extends Video> onExecute() throws Exception {
+            return apple2017Repository.fetchVideos();
         }
 
         @Override
-        public void onComplete(List<Video> data) {
+        public void onComplete(List<? extends Video> data) {
             listener.onFetch(new VideoPlaylist(data));
         }
     }
